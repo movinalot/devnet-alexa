@@ -74,7 +74,7 @@ def add_vlan(intent, session):
     session_attributes = {}
     reprompt_text = None
     
-    result = ucsm_operations.add_ucs_vlan(intent['slots']['vlanid']['value'])
+    result = ucsm_operations.add_ucs_vlan(intent['slots']['vlan_id']['value'])
 
     speech_output = "For the requested UCS Manager operation, " + result
     should_end_session = True
