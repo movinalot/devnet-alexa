@@ -62,15 +62,21 @@ def get_faults(intent, session):
     session_attributes = {}
     reprompt_text = None
 
-    fault_counts = ucsm_operations.get_ucs_faults()
+    result = ucsm_operations.get_ucs_faults()
 
-    faults = fault_counts.split(',')
+    speech_output = "For the requested UCS Manager operation, " + result
+    should_end_session = True
 
-    speech_output = "For the queried UCS domain, there are, " \
-                    + faults[0] + ", critical faults, " \
-                    + faults[1] + ", major faults, " \
-                    + faults[2] + ", minor faults, and," \
-                    + faults[3] + ", warnings."
+    return build_response(session_attributes, build_speechlet_response(
+        intent['name'], speech_output, reprompt_text, should_end_session))
+
+def add_vlan(intent, session):
+    session_attributes = {}
+    reprompt_text = None
+    
+    result = ucsm_operations.add_ucs_vlan(intent['slots']['vlanid']['value'])
+
+    speech_output = "For the requested UCS Manager operation, " + result
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
@@ -108,6 +114,10 @@ def on_intent(intent_request, session):
     # Dispatch to your skill's intent handlers
     if intent_name == "GetFaults":
         return get_faults(intent, session)
+    elif intent_name == "AddVlan":
+        return add_vlan(intent, session)
+    elif intent_name == "ProvisionServer":
+        return provision_server(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
