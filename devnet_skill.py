@@ -1,4 +1,14 @@
+"""
+devnet_skill.py
+Purpose:
+    lambda hander for the DevNet Alexa Data Center Skill
+Author:
+    John McDonough (jomcdono@cisco.com)
+    Cisco Systems, Inc.
+"""
 from __future__ import print_function
+
+# Import the UCS Management functions
 import ucsm_operations
 
 # --------------- Helpers that build all of the responses ----------------------
@@ -38,10 +48,10 @@ def get_welcome_response():
 
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "Welcome to the DevNet App for UCS Managment." \
-                    "You can ask things like, What is the fault count on my UCS?" \
-                    "Or you can ask What is the fault count for server three in chassis two?" \
-                    "Or Provision a Web server."
+    speech_output = "Welcome to the DevNet Alexa Skill for UCS Managment." \
+                    "You can say things like, What is my fault count?" \
+                    "Or you can say Add V Lan 100." \
+                    "Or you can say Provision a server."
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
     reprompt_text = "Did you want to do something with, or know something about your UCS System?"
@@ -51,57 +61,52 @@ def get_welcome_response():
 
 def handle_session_end_request():
     card_title = "Session Ended"
-    speech_output = "Thank you for using the Alexa App for UCS Management. " \
-                    "Have a nice day! "
+    speech_output = "Thank you for using the Alexa Skill for UCS Management."
+
     # Setting this to true ends the session and exits the skill.
     should_end_session = True
     return build_response({}, build_speechlet_response(
         card_title, speech_output, None, should_end_session))
 
+# Get the UCS Faults
 def get_faults(intent, session):
     session_attributes = {}
     reprompt_text = None
 
-    result = ucsm_operations.get_ucs_faults()
-
-    speech_output = "For the requested UCS Manager fault retrieval operation, " + result
+    speech_output = ucsm_operations.get_ucs_faults()
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
         intent['name'], speech_output, reprompt_text, should_end_session))
 
+# Add a UCS VLAN
 def add_vlan(intent, session):
     session_attributes = {}
     reprompt_text = None
-    
-    result = ucsm_operations.add_ucs_vlan(intent['slots']['vlan_id']['value'])
 
-    speech_output = "For the requested UCS Manager V Lan operation, " + result
+    speech_output = ucsm_operations.add_ucs_vlan(intent['slots']['vlan_id']['value'])
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
         intent['name'], speech_output, reprompt_text, should_end_session))
 
-
+# Remove a UCS VLAN
 def remove_vlan(intent, session):
     session_attributes = {}
     reprompt_text = None
-    
-    result = ucsm_operations.remove_ucs_vlan(intent['slots']['vlan_id']['value'])
 
-    speech_output = "For the requested UCS Manager V Lan operation, " + result
+    speech_output = ucsm_operations.remove_ucs_vlan(intent['slots']['vlan_id']['value'])
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
         intent['name'], speech_output, reprompt_text, should_end_session))
 
+# Create and Associate a Service Profile to an available server
 def set_server(intent, session):
     session_attributes = {}
     reprompt_text = None
-    
-    result = ucsm_operations.set_ucs_server()
 
-    speech_output = "For the requested UCS Manager Server Provisioning operation, " + result
+    speech_output = result = ucsm_operations.set_ucs_server()
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
@@ -137,13 +142,13 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    if intent_name == "GetFaults":
+    if intent_name == "GetFaults":         # Entry point for the GetFaults intent that you created
         return get_faults(intent, session)
-    elif intent_name == "AddVlan":
+    elif intent_name == "AddVlan":         # Entry point for the AddVlan intent that you created
         return add_vlan(intent, session)
-    elif intent_name == "RemoveVlan":
+    elif intent_name == "RemoveVlan":      # Entry point for the RemoveVlan intent that you may have created :)
         return add_vlan(intent, session)
-    elif intent_name == "ProvisionServer":
+    elif intent_name == "ProvisionServer": # Entry point for the ProvisionServer intent that you created
         return set_server(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
