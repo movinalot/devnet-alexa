@@ -64,7 +64,7 @@ def get_faults(intent, session):
 
     result = ucsm_operations.get_ucs_faults()
 
-    speech_output = "For the requested UCS Manager operation, " + result
+    speech_output = "For the requested UCS Manager fault retrieval operation, " + result
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
@@ -76,7 +76,32 @@ def add_vlan(intent, session):
     
     result = ucsm_operations.add_ucs_vlan(intent['slots']['vlan_id']['value'])
 
-    speech_output = "For the requested UCS Manager operation, " + result
+    speech_output = "For the requested UCS Manager V Lan operation, " + result
+    should_end_session = True
+
+    return build_response(session_attributes, build_speechlet_response(
+        intent['name'], speech_output, reprompt_text, should_end_session))
+
+
+def remove_vlan(intent, session):
+    session_attributes = {}
+    reprompt_text = None
+    
+    result = ucsm_operations.remove_ucs_vlan(intent['slots']['vlan_id']['value'])
+
+    speech_output = "For the requested UCS Manager V Lan operation, " + result
+    should_end_session = True
+
+    return build_response(session_attributes, build_speechlet_response(
+        intent['name'], speech_output, reprompt_text, should_end_session))
+
+def set_server(intent, session):
+    session_attributes = {}
+    reprompt_text = None
+    
+    result = ucsm_operations.set_ucs_server()
+
+    speech_output = "For the requested UCS Manager Server Provisioning operation, " + result
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(
@@ -116,8 +141,10 @@ def on_intent(intent_request, session):
         return get_faults(intent, session)
     elif intent_name == "AddVlan":
         return add_vlan(intent, session)
+    elif intent_name == "RemoveVlan":
+        return add_vlan(intent, session)
     elif intent_name == "ProvisionServer":
-        return provision_server(intent, session)
+        return set_server(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
