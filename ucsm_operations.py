@@ -1,3 +1,12 @@
+"""
+ucsm_operations.py
+Purpose:
+    UCS Manager functions for the DevNet Alexa Data Center Skill
+Author:
+    John McDonough (jomcdono@cisco.com)
+    Cisco Systems, Inc.
+"""
+
 import urllib2
 from ucsmsdk.ucshandle import UcsHandle
 from ucsmsdk.ucssession import UcsException
@@ -6,7 +15,6 @@ from ucsmsdk.ucssession import UcsException
 # for example
 # ucsmhost = "10.10.10.10"
 ucsmhost = "Your UCS Manager IP"
-ucsmhost = "128.107.70.148"
 
 handle = None
 status = {}
@@ -127,7 +135,7 @@ def get_ucs_faults():
     message = ("For the requested UCS Manager fault retrieval operation, there are " +
         str(sev_critical) + " critical faults, " +
         str(sev_major) + " major faults, " +
-        str(sev_minor) + " minor faults, " +
+        str(sev_minor) + " minor faults, and " +
         str(sev_warning) + " warnings")
 
     return message
