@@ -278,6 +278,7 @@ def ucsm_logout():
 
 if __name__ == "__main__":
 
+    print "Accesed Directly!"
     # Uncomment for local testing
 
     #print get_ucs_faults(), status['login']
@@ -312,4 +313,3 @@ if __name__ == "__main__":
     #print set_ucs_server()
 
     #print reset_ucs_skill()
-    pass
