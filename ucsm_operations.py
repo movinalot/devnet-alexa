@@ -12,7 +12,7 @@ from ucsmsdk.ucshandle import UcsHandle
 from ucsmsdk.ucssession import UcsException
 
 # Put your UCS Manger IP address here, inside the quotes
-ucsmhost = "Your UCS Manager IP"
+ucsmhost = "10.10.10.10"
 
 handle = None
 status = {}
@@ -278,7 +278,7 @@ if __name__ == "__main__":
 
     # Uncomment for local testing
 
-    print get_ucs_faults(), status['login']
+    #print get_ucs_faults(), status['login']
 
     #print add_ucs_vlan("1")
     #print add_ucs_vlan("4029")
