@@ -310,9 +310,9 @@ if __name__ == "__main__":
     #print remove_ucs_vlan("110")
     #print remove_ucs_vlan("100")
 
-    print set_ucs_server()
+    #print set_ucs_server()
     #print set_ucs_server()
     #print set_ucs_server()
     #print set_ucs_server()
 
-    #print reset_ucs_skill()
+    print reset_ucs_skill()
