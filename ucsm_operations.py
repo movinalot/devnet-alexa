@@ -177,11 +177,14 @@ def set_ucs_server():
     filter_exp = '(name,"DevNet_Skill_*", type="re") and (type,"instance")'
     mo_sp_instances = handle.query_classid("lsServer",filter_str=filter_exp)
     
-    # Find the highest existing suffix
-    sp_suffixes = [int(sp_instance.name[sp_instance.name.rindex('_')+1:]) for sp_instance in mo_sp_instances]
+    # Find the highest suffix for existing Service Profiles
+    if len(mo_sp_instances) >= 1:
+        sp_suffixes = [int(sp_instance.name[sp_instance.name.rindex('_')+1:]) for sp_instance in mo_sp_instances]
+        num_sp_instances = max(sp_suffixes) + 1
+    else:
+        num_sp_instances =1
 
     # Create the next Service Profile name
-    num_sp_instances = max(sp_suffixes) + 1
     if num_sp_instances <= 9:
         service_profile_name = "DevNet_Skill_Server_0" + str(num_sp_instances)
     else:
@@ -307,7 +310,7 @@ if __name__ == "__main__":
     #print remove_ucs_vlan("110")
     #print remove_ucs_vlan("100")
 
-    #print set_ucs_server()
+    print set_ucs_server()
     #print set_ucs_server()
     #print set_ucs_server()
     #print set_ucs_server()
