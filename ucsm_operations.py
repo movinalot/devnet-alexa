@@ -12,6 +12,7 @@ import urllib2
 from ucsmsdk.ucshandle import UcsHandle
 from ucsmsdk.ucssession import UcsException
 
+ucsmhost = os.environ['UCSMHOST']
 handle = None
 status = {}
 
@@ -249,7 +250,6 @@ def ucsm_login():
 
     global handle, status
 
-    ucsmhost = os.environ['UCSMHOST']
     username = "admin"
     password = "password"
 
@@ -309,3 +309,4 @@ if __name__ == "__main__":
     #print set_ucs_server()
 
     #print reset_ucs_skill()
+    pass
