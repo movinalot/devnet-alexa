@@ -177,8 +177,11 @@ def set_ucs_server():
     filter_exp = '(name,"DevNet_Skill_*", type="re") and (type,"instance")'
     mo_sp_instances = handle.query_classid("lsServer",filter_str=filter_exp)
     
+    # Find the highest existing suffix
+    sp_suffixes = [int(sp_instance.name[sp_instance.name.rindex('_')+1:]) for sp_instance in mo_sp_instances]
+
     # Create the next Service Profile name
-    num_sp_instances = len(mo_sp_instances) + 1
+    num_sp_instances = max(sp_suffixes) + 1
     if num_sp_instances <= 9:
         service_profile_name = "DevNet_Skill_Server_0" + str(num_sp_instances)
     else:
@@ -199,8 +202,8 @@ def set_ucs_server():
     ucsm_logout()
 
     message = ("For the requested UCS Manager Server Provisioning operation," +
-        " server, " + blade.slot_id + 
-        " in chassis, " + blade.chassis_id +
+        " server, " + blade.slot_id + ", " + 
+        " in chassis, " + blade.chassis_id + ", " + 
         " has been provisioned with service profile, " + service_profile_name.replace('_',' ') + "," +
         " in the Dev Net Organization.")
     
