@@ -7,12 +7,10 @@ Author:
     Cisco Systems, Inc.
 """
 
+import os
 import urllib2
 from ucsmsdk.ucshandle import UcsHandle
 from ucsmsdk.ucssession import UcsException
-
-# Put your UCS Manger IP address here, inside the quotes
-ucsmhost = "10.10.10.10"
 
 handle = None
 status = {}
@@ -251,6 +249,7 @@ def ucsm_login():
 
     global handle, status
 
+    ucsmhost = os.environ['UCSMHOST']
     username = "admin"
     password = "password"
 
