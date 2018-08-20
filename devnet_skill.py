@@ -148,7 +148,7 @@ def on_intent(intent_request, session):
     elif intent_name == "AddVlan":         # Entry point for the AddVlan intent that you created
         return add_vlan(intent, session)
     elif intent_name == "RemoveVlan":      # Entry point for the RemoveVlan intent that you may have created :)
-        return add_vlan(intent, session)
+        return remove_vlan(intent, session)
     elif intent_name == "ProvisionServer": # Entry point for the ProvisionServer intent that you created
         return set_server(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
