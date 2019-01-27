@@ -4,4 +4,4 @@ In this lab you will put together the pieces for an Alexa Skill that will let yo
 
 ## Cisco DevNet Learning Lab
 
-The lab that guides you through the steps to create the DevNet Alexa Data Center Skill is part of the [Cisco DevNet Learning Labs](https://learninglabs.cisco.com/lab/devnet-alexa-lab/step/1)
+The [DevNet Alexa Data Center Skill Learning Lab](https://learninglabs.cisco.com/lab/devnet-alexa-lab/step/1) guides you through the steps to create the DevNet Alexa Data Center Skill.
